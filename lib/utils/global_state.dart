@@ -1,4 +1,3 @@
-// global_state.dart
-class GlobalState {
-  static bool isQrGenerated = false;
-}
+import 'package:myapp/entities/user.dart';
+
+User? currentUser; // Usuario autenticado

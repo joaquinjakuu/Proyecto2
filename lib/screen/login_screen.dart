@@ -3,6 +3,12 @@ import 'package:myapp/entities/user.dart';
 import 'package:myapp/screen/eligerol_screen.dart';
 import 'package:myapp/screen/home_screen.dart';
 import 'package:myapp/screen/homedoc_screen.dart';
+import 'package:myapp/utils/global_state.dart';
+import 'package:provider/provider.dart';
+import 'package:myapp/providers/user_provider.dart';
+import 'package:go_router/go_router.dart';
+
+
 
 class LoginScreen extends StatefulWidget {
   static const name = 'LoginScreen';
@@ -26,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
       password: 'contraseña1',
       firstName: 'Juan',
       lastName: 'Pérez',
-      email: 'juan@example.com',
+      email: 'juan@gmail.com',
       phone: '+34123456789',
       gender: 'Masculino',
       birthDate: DateTime(1990, 5, 23),
@@ -67,47 +73,32 @@ class _LoginScreenState extends State<LoginScreen> {
 
   // Función para validar el login
   void _loginUser() {
-    String enteredUsername = usernameController.text;
-    String enteredPassword = passwordController.text;
-
-    User? foundUser;
-    try {
-      foundUser = registeredUsers.firstWhere(
-        (user) => user.username == enteredUsername && user.password == enteredPassword,
-      );
-    } catch (e) {
-      foundUser = null; // Usuario no encontrado
-    }
-
-    setState(() {
-      if (foundUser != null) {
-        isUsernameValid = true;
-        isPasswordValid = true;
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('¡Bienvenido, ${foundUser.firstName}!')),
-        );
-
-        // Redirige según el tipo de usuario
-        if (foundUser.isDoctor == true) {
-          Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeDocScreen()),
-                );
-        } else {
-          Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
-        }
-      } else {
-        isUsernameValid = false;
-        isPasswordValid = false;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Nombre de usuario o contraseña incorrectos')),
-        );
-      }
-    });
+  User? foundUser;
+  try {
+    foundUser = registeredUsers.firstWhere(
+      (user) => user.username == usernameController.text && user.password == passwordController.text,
+    );
+  } catch (e) {
+    foundUser = null;
   }
+
+  if (foundUser != null) {
+     currentUser = foundUser;
+    // Guardar usuario en el Provider
+    Provider.of<UserProvider>(context, listen: false).loginUser(foundUser);
+
+    if (foundUser.isDoctor == true) {
+      context.pushNamed(HomeDocScreen.name);
+    } else {
+      context.pushNamed( HomeScreen.name);
+    }
+  } else {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Nombre de usuario o contraseña incorrectos')),
+    );
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {

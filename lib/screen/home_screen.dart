@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:myapp/screen/configuracionuser_screen.dart';
 import 'package:myapp/screen/infoapp_screen.dart';
 import 'package:myapp/screen/login_screen.dart';
-import 'codigoqr_screen.dart'; // Asegúrate de importar la pantalla del Código QR
+import 'codigoqr_screen.dart';
+import 'package:go_router/go_router.dart';
+
 
 class HomeScreen extends StatelessWidget {
   static const name = 'HomeScreen';
 
   @override
   Widget build(BuildContext context) {
-    // Lista de datos estáticos (por ahora)
     final List<Map<String, String>> datosMedicos = [
       {'label': 'Nombre', 'value': 'Juan'},
       {'label': 'Apellido', 'value': 'Pérez'},
@@ -32,67 +33,49 @@ class HomeScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-              child: Text(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: const Text(
                 'Menú',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 24,
-                  fontFamily: 'InknutAntiqua',
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
             ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Configuración'),
+              leading: const Icon(Icons.settings),
+              title: const Text('Configuración'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ConfiguracionUser()),
-                );
+                context.pushNamed(ConfiguracionUser.name);
               },
             ),
             ListTile(
-              leading: Icon(Icons.qr_code),
-              title: Text('Código QR'),
+              leading: const Icon(Icons.qr_code),
+              title: const Text('Código QR'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CodigoQrScreen()),
-                );
+                context.pushNamed(CodigoQrScreen.name);
               },
             ),
             ListTile(
-              leading: Icon(Icons.info),
-              title: Text('Información de la app'),
+              leading: const Icon(Icons.info),
+              title: const Text('Información de la app'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => InfoAppScreen()),
-                );
+                context.pushNamed(InfoAppScreen.name);
               },
             ),
             ListTile(
-              leading: Icon(Icons.account_circle),
-              title: Text('Mi cuenta'),
+              leading: const Icon(Icons.account_circle),
+              title: const Text('Mi cuenta'),
               onTap: () {
-               Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => HomeScreen()),
-                );
+                Navigator.pop(context); // Regresa a la pantalla actual
               },
             ),
             ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Cerrar sesión'),
+              leading: const Icon(Icons.logout),
+              title: const Text('Cerrar sesión'),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
-                );
+                context.pushNamed(LoginScreen.name);
               },
             ),
           ],
@@ -104,11 +87,9 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 20),
-
             ...datosMedicos.asMap().entries.map((entry) {
               int index = entry.key;
               Map<String, String> data = entry.value;
-
               Color fondoColor = (index % 2 == 0) ? Colors.white : Colors.grey[200]!;
 
               return Container(
@@ -116,9 +97,8 @@ class HomeScreen extends StatelessWidget {
                 color: fondoColor,
                 child: Text(
                   '${data['label']}: ${data['value']}',
-                  style: TextStyle(
-                    fontFamily: 'InknutAntiqua', 
-                    fontSize: 18, 
+                  style: const TextStyle(
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),

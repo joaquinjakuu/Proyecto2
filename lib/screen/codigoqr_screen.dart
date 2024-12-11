@@ -44,7 +44,7 @@ class _CodigoQrScreenState extends State<CodigoQrScreen> {
           children: [
             Text(
               user != null
-                  ? 'Bienvenido, ${user.email}'
+                  ? 'Bienvenido, ${user.firstName}'
                   : 'Cargando usuario...',
               style: TextStyle(
                 fontFamily: 'InknutAntiqua',

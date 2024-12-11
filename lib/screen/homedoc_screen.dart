@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:myapp/screen/configdoc_screen.dart';
+import 'package:myapp/screen/infoappdoc_screen.dart';
+import 'package:myapp/screen/login_screen.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:go_router/go_router.dart';
+
 
 class HomeDocScreen extends StatelessWidget {
   static const name = 'HomeDocScreen';
@@ -30,7 +35,7 @@ class HomeDocScreen extends StatelessWidget {
               leading: const Icon(Icons.settings),
               title: const Text('Configuración'),
               onTap: () {
-                Navigator.pushNamed(context, '/configuracion_doc');
+                context.pushNamed(ConfiguracionDoc.name);
               },
             ),
             ListTile(
@@ -44,14 +49,14 @@ class HomeDocScreen extends StatelessWidget {
               leading: const Icon(Icons.info),
               title: const Text('Información de la app'),
               onTap: () {
-                Navigator.pushNamed(context, '/info_app_doc');
+                context.pushNamed(InfoAppDocScreen.name);
               },
             ),
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text('Cerrar sesión'),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/login');
+                context.pushNamed(LoginScreen.name);
               },
             ),
           ],

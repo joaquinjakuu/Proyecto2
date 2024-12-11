@@ -6,6 +6,7 @@ import 'package:myapp/screen/eligerol_screen.dart';
 import 'package:myapp/screen/esperadoc_screen.dart';
 import 'package:myapp/screen/formulariousuario_screen.dart';
 import 'package:myapp/screen/home_screen.dart';
+import 'package:myapp/screen/homedoc_screen.dart';
 import 'package:myapp/screen/infoapp_screen.dart';
 import 'package:myapp/screen/infoappdoc_screen.dart';
 import 'package:myapp/screen/login_screen.dart';
@@ -31,6 +32,11 @@ final appRouter = GoRouter(
       name: HomeScreen.name,
       path: '/home',
       builder: (context, state) => HomeScreen(),
+    ),
+    GoRoute(
+      name: HomeDocScreen.name,
+      path: '/homedoc',
+      builder: (context, state) => HomeDocScreen(),
     ),
     GoRoute(
       name: EligeRol.name,
